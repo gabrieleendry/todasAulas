@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apostila: do zero ao projeto PW2 Ingressos (Java + Spring Boot)</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fa;--fg:#1b2330;--mut:#566074;--card:#fff;--bd:#d9dee8;--ac:#2f45c9;--code:#eceff6;--py:#c99a06;--jv:#d9541e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161e;--fg:#e6e9f0;--mut:#9aa4b8;--card:#1a202b;--bd:#2c3546;--ac:#8ea0ff;--code:#0e1218;--py:#e3b93c;--jv:#ff8a5c}}
+:root[data-theme="dark"]{--bg:#12161e;--fg:#e6e9f0;--mut:#9aa4b8;--card:#1a202b;--bd:#2c3546;--ac:#8ea0ff;--code:#0e1218;--py:#e3b93c;--jv:#ff8a5c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:700px;margin:0 auto;padding:22px 16px 56px}
+h1{font-size:1.9rem;line-height:1.2;margin:.3em 0 .2em}
+h2{font-size:1.45rem;margin:2.4em 0 .5em;padding-bottom:.25em;border-bottom:2px solid var(--ac)}
+h3{font-size:1.08rem;margin:1.5em 0 .3em}
+p,li{max-width:70ch}
+a{color:var(--ac)}
+pre,code{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+pre{background:var(--code);border:1px solid var(--bd);border-left:4px solid var(--mut);border-radius:6px;padding:12px;overflow-x:auto;font-size:.8rem;line-height:1.55;margin:12px 0}
+pre.py{border-left-color:var(--py)}pre.jv{border-left-color:var(--jv)}
+:not(pre)>code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.85em}
+.box{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:6px;padding:8px 14px;margin:16px 0}
+.warn{border-left-color:var(--jv)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{border:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--code)}
+.sub{color:var(--mut);margin:0 0 1em}
+nav li{margin:.15em 0}
+</style>
+</head>
+<body>
+<main>
+<h1>Do zero ao projeto PW2 Ingressos</h1>
+<p class="sub">Java + Spring Boot para quem sabe um pouco de Python e ainda não viu POO. Termos técnicos aparecem [entre colchetes] com a explicação. Blocos com borda amarela são Python; com borda laranja, Java.</p>
+
+<nav class="box"><b>Capítulos</b>
+<ol>
+<li><a href="#c1">Java × Python: o básico</a></li>
+<li><a href="#c2">POO do zero</a></li>
+<li><a href="#c3">Anatomia do projeto</a></li>
+<li><a href="#c4">Anotações e Lombok</a></li>
+<li><a href="#c5">Banco de dados e JPA (Filme.java)</a></li>
+<li><a href="#c6">API REST (FilmeController)</a></li>
+<li><a href="#c7">SalaController: seu ponto de partida</a></li>
+<li><a href="#c8">Pegadinhas do projeto</a></li>
+<li><a href="#c9">Exercícios</a></li>
+</ol></nav>
+
+<h2 id="c1">1. Java × Python: o básico</h2>
+<div class="wrap"><table>
+<tr><th>Ideia</th><th>Python</th><th>Java</th></tr>
+<tr><td>Bloco</td><td>indentação</td><td>chaves <code>{ }</code></td></tr>
+<tr><td>Fim da instrução</td><td>quebra de linha</td><td><code>;</code> obrigatório</td></tr>
+<tr><td>Comentário</td><td><code># texto</code></td><td><code>// texto</code></td></tr>
+<tr><td>Variável</td><td><code>x = 5</code></td><td><code>int x = 5;</code> (tipo antes)</td></tr>
+<tr><td>Texto</td><td><code>'oi'</code> ou <code>"oi"</code></td><td>só <code>"oi"</code>, tipo <code>String</code></td></tr>
+<tr><td>Booleano / vazio</td><td><code>True</code>, <code>None</code></td><td><code>true</code>, <code>null</code></td></tr>
+<tr><td>Imprimir</td><td><code>print(x)</code></td><td><code>System.out.println(x);</code></td></tr>
+<tr><td>Lista</td><td><code>[1, 2]</code></td><td><code>List.of(1, 2)</code></td></tr>
+<tr><td>Condição</td><td><code>if / elif / else</code></td><td><code>if (...) {} else if (...) {} else {}</code></td></tr>
+<tr><td>O próprio objeto</td><td><code>self</code></td><td><code>this</code></td></tr>
+<tr><td>Início do programa</td><td><code>if __name__ == "__main__":</code></td><td><code>public static void main(String[] args)</code></td></tr>
+</table></div>
+
+<h3>Tipos que aparecem no projeto</h3>
+<ul>
+<li><code>int</code> inteiro; <code>long</code> inteiro grande (o literal termina em <code>L</code>: <code>1L</code>); <code>double</code> decimal; <code>boolean</code> verdadeiro/falso; <code>String</code> texto.</li>
+<li><code>Integer</code>, <code>Long</code>, <code>Double</code> (com maiúscula) são [wrappers], a versão "objeto" do tipo simples. A diferença que importa: aceitam <code>null</code>. Por isso as entidades ligadas ao banco usam essas versões, já que uma coluna pode ficar vazia.</li>
+<li><code>List&lt;Filme&gt;</code> é uma lista que só aceita <code>Filme</code>. O que vai entre <code>&lt; &gt;</code> é um [generic]: a etiqueta do que a "caixa" guarda.</li>
+</ul>
+<div class="box"><b>Ideia-chave:</b> Java é Python com mais burocracia escrita: chaves, ponto e vírgula e tipos declarados. A lógica (if, for, funções) é a mesma.</div>
+
+<h2 id="c2">2. POO do zero</h2>
+<p>[POO] (programação orientada a objetos) é organizar o código em torno de "coisas". Uma <b>classe</b> é a planta da casa (ou a forma de bolo); um <b>objeto</b> é a casa construída (ou o bolo). Da mesma planta saem várias casas, cada uma com seus próprios dados.</p>
+<pre class="py"><code>class Filme:
+    def __init__(self, nome, duracao):   # construtor
+        self.nome = nome                 # atributos
+        self.duracao = duracao
+
+    def resumo(self):                    # método
+        return f"{self.nome} ({self.duracao} min)"
+
+f = Filme("Matrix", 136)                 # cria o objeto
+print(f.resumo())</code></pre>
+<pre class="jv"><code>public class Filme {
+    private String nome;                 // atributos
+    private Integer duracao;
+
+    public Filme(String nome, Integer duracao) {   // construtor: mesmo nome da classe
+        this.nome = nome;
+        this.duracao = duracao;
+    }
+
+    public String getNome() { return nome; }               // getter: lê
+    public void setNome(String nome) { this.nome = nome; } // setter: altera
+
+    public String resumo() {                                // método: String = devolve texto
+        return nome + " (" + duracao + " min)";
+    }
+}
+// em outro lugar:
+Filme f = new Filme("Matrix", 136);      // 'new' cria o objeto
+System.out.println(f.resumo());</code></pre>
+<ul>
+<li><b>Atributo:</b> variável que vive dentro do objeto. <b>Método:</b> função que vive dentro da classe.</li>
+<li><b>Construtor:</b> método especial chamado pelo <code>new</code>; equivale ao <code>__init__</code>.</li>
+<li><code>public</code> = qualquer um acessa. <code>private</code> = só a própria classe acessa. Em Python isso é só combinação; em Java o compilador barra. Isso é [encapsulamento]: proteger os dados e só liberar acesso por métodos.</li>
+<li><b>Getter/setter:</b> métodos que leem e alteram um atributo <code>private</code> (<code>getNome()</code>, <code>setNome(...)</code>). Escrever isso à mão é chato, e é aí que entra o Lombok (capítulo 4).</li>
+<li>O tipo antes do nome do método é o que ele devolve; <code>void</code> = não devolve nada.</li>
+</ul>
+<div class="box"><b>Ideia-chave:</b> classe = molde; objeto = coisa criada com <code>new</code>; atributos guardam dados; métodos fazem ações; <code>private</code> protege.</div>
+
+<h2 id="c3">3. Anatomia do projeto</h2>
+<pre><code>PW2-ingresso-banco/
+├─ pom.xml                 dependências e build (Maven)
+├─ banco.txt               script SQL da tabela TBL_FILME
+├─ explicacao.txt          anotações do professor sobre JPA
+├─ docs/Atividade ingressos.pdf   diagrama de classes da atividade
+└─ src/
+   ├─ main/java/br/com/etechoracio/ingressos/
+   │  ├─ Pw2IngressosApplication.java   botão de ligar
+   │  ├─ controller/   FilmeController, SalaController
+   │  ├─ entity/       Filme
+   │  └─ enums/        3 enums
+   ├─ main/resources/application.properties   configuração
+   └─ test/.../Pw2IngressosApplicationTests.java</code></pre>
+<ul>
+<li><b>package</b> = a pasta onde o arquivo mora (<code>br.com.etechoracio.ingressos.entity</code> = <code>br/com/etechoracio/ingressos/entity</code>). O costume é usar o domínio da empresa/escola ao contrário. <b>import</b> = igual ao Python.</li>
+<li>O nome do arquivo tem que ser igual ao da classe pública dentro dele.</li>
+<li>[Maven] é o gerenciador de dependências e de build (o <code>pip</code> + <code>requirements.txt</code> do Java). O <code>pom.xml</code> é a lista. O <code>mvnw</code> é um Maven "portátil": roda sem você instalar nada.</li>
+</ul>
+<div class="wrap"><table>
+<tr><th>Dependência no pom.xml</th><th>Para que serve</th></tr>
+<tr><td><code>spring-boot-starter-webmvc</code></td><td>servidor web e API REST</td></tr>
+<tr><td><code>spring-boot-starter-data-jpa</code></td><td>JPA + Hibernate: conversa com o banco usando classes</td></tr>
+<tr><td><code>mssql-jdbc</code></td><td>driver do SQL Server (só em execução: <code>runtime</code>)</td></tr>
+<tr><td><code>lombok</code></td><td>gera getters, setters e construtores por você</td></tr>
+</table></div>
+<h3>O botão de ligar (Pw2IngressosApplication)</h3>
+<pre class="jv"><code>package br.com.etechoracio.ingressos;               // pasta lógica
+
+import org.springframework.boot.SpringApplication;  // traz ferramentas do Spring
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication      // "esta é a classe principal": liga as configs automáticas
+public class Pw2IngressosApplication {
+    public static void main(String[] args) {                          // ponto de entrada
+        SpringApplication.run(Pw2IngressosApplication.class, args);   // sobe o servidor
+    }
+}</code></pre>
+<p>O teste (<code>@SpringBootTest</code> + <code>@Test contextLoads()</code>) só confere que a aplicação consegue subir sem erro.</p>
+<div class="box"><b>Ideia-chave:</b> a estrutura de pastas não é enfeite: o Spring escaneia os pacotes a partir da classe principal e encontra sozinho tudo que tem anotação.</div>
+
+<h2 id="c4">4. Anotações e Lombok</h2>
+<p>[Anotação] é o <code>@algo</code> escrito em cima de uma classe, atributo ou método. Parece o decorator do Python (<code>@app.route</code>): um adesivo que adiciona comportamento sem você escrever o código. O Spring lê os adesivos e sabe o que fazer com cada classe.</p>
+<p>O [Lombok] é uma biblioteca cujas anotações <b>escrevem código chato por você</b> na hora de compilar:</p>
+<div class="wrap"><table>
+<tr><th>Anotação</th><th>O que gera</th></tr>
+<tr><td><code>@Getter</code> / <code>@Setter</code></td><td>um <code>getX()</code> / <code>setX()</code> para cada atributo</td></tr>
+<tr><td><code>@AllArgsConstructor</code></td><td>construtor que recebe todos os atributos</td></tr>
+<tr><td><code>@Builder</code></td><td>jeito de montar objeto por etapas, nomeando cada campo</td></tr>
+</table></div>
+<pre class="jv"><code>Filme f = Filme.builder()      // começa a montar
+        .id(1L)                // 1L = long
+        .nome("Matrix")
+        .build();              // entrega o objeto pronto (campos não citados ficam null)</code></pre>
+<p>Vantagem: você não precisa lembrar a ordem dos argumentos de um construtor com 12 campos.</p>
+<div class="box"><b>Ideia-chave:</b> anotação = adesivo que gera ou configura comportamento. Lombok gera código; Spring e JPA configuram o resto.</div>
+
+<h2 id="c5">5. Banco de dados e JPA (Filme.java)</h2>
+<p>O esquema do professor (explicacao.txt), de cima para baixo:</p>
+<pre><code>SUA APLICAÇÃO JAVA
+   ▼  Spring Data JPA   (facilita o acesso)
+   ▼  JPA               (especificação/regras: as anotações)
+   ▼  Hibernate         (implementação do JPA: o ORM)
+   ▼  JDBC              (API padrão de Java para bancos)
+   ▼  Driver JDBC       (tradutor do seu SGBD: aqui, SQL Server)
+   ▼  BANCO DE DADOS</code></pre>
+<p>[ORM] (mapeamento objeto-relacional) = tabela vira classe, linha vira objeto, coluna vira atributo. Você mexe em objetos e o Hibernate escreve o SQL. Menos <code>SELECT</code>/<code>INSERT</code> à mão.</p>
+<div class="wrap"><table>
+<tr><th>Anotação</th><th>Significa</th></tr>
+<tr><td><code>@Entity</code></td><td>esta classe representa uma tabela</td></tr>
+<tr><td><code>@Table(name="TBL_FILME")</code></td><td>nome real da tabela no banco</td></tr>
+<tr><td><code>@Id</code></td><td>este atributo é a PRIMARY KEY</td></tr>
+<tr><td><code>@Column(name="...")</code></td><td>nome real da coluna</td></tr>
+<tr><td><code>@GeneratedValue(strategy = IDENTITY)</code></td><td>o banco gera o id (auto incremento)</td></tr>
+<tr><td><code>@Enumerated(EnumType.STRING)</code></td><td>guarda o enum como texto ("ACAO"), não como número</td></tr>
+<tr><td><code>@Transient</code></td><td>NÃO vai para o banco (só existe na memória)</td></tr>
+</table></div>
+<h3>Filme.java, linha por linha</h3>
+<pre class="jv"><code>package br.com.etechoracio.ingressos.entity;
+import ...;                    // enums do projeto, jakarta.persistence.* (JPA), lombok.*, LocalDateTime
+
+@Builder @Getter @Setter @AllArgsConstructor   // Lombok: builder, getters, setters, construtor
+@Entity                                         // é uma tabela
+@Table(name = "TBL_FILME")                      // a tabela se chama TBL_FILME
+public class Filme {
+    @Id                                         // chave primária
+    @Column(name = "ID_FILME")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   // banco gera o número
+    private Long id;
+
+    @Column(name = "TX_NOME")   private String nome;
+    @Column(name = "NR_DURACAO") private Integer duracao;
+
+    @Column(name = "TP_CATEGORIA")
+    @Enumerated(EnumType.STRING)                // grava "ACAO", "DRAMA"...
+    private CategoriaFilmeEnum categoria;
+
+    // classificacao (enum), ano, capa, diretor, elenco, descricao e avaliacao
+    // seguem o mesmo padrão: @Column + atributo privado.
+
+    @Column(name = "CHK_EM_CARTAZ")
+    private SimNaoEnum emCartaz;                // 'S' ou 'N'
+
+    @Transient
+    private LocalDateTime dataExclusao;         // não existe no banco
+}</code></pre>
+<p>Os prefixos das colunas são um padrão do banco: <code>TX</code> texto, <code>NR</code> número, <code>TP</code> tipo (enum), <code>CHK</code> marcador sim/não, <code>ID</code> chave. O script <code>banco.txt</code> cria a tabela com esses nomes.</p>
+
+<h3>application.properties</h3>
+<div class="wrap"><table>
+<tr><th>Linha</th><th>Efeito</th></tr>
+<tr><td><code>spring.application.name</code></td><td>nome da aplicação</td></tr>
+<tr><td><code>spring.datasource.url</code></td><td>onde está o banco (SQL Server local, banco <code>pw2_ingressos</code>)</td></tr>
+<tr><td><code>...username / password</code></td><td>login no banco</td></tr>
+<tr><td><code>...driver-class-name</code></td><td>qual driver JDBC usar</td></tr>
+<tr><td><code>spring.jpa.database-platform</code></td><td>dialeto: o "sotaque" de SQL do SQL Server</td></tr>
+<tr><td><code>ddl-auto=validate</code></td><td>só confere se as tabelas batem com as entidades; não cria nem altera (por isso rode o <code>banco.txt</code> antes)</td></tr>
+<tr><td><code>show-sql=true</code></td><td>mostra no console o SQL que o Hibernate gera</td></tr>
+<tr><td><code>naming.physical-strategy=...StandardImpl</code></td><td>usa os nomes das colunas exatamente como escritos, sem converter para snake_case</td></tr>
+</table></div>
+<div class="box"><b>Ideia-chave:</b> mexeu na classe = mexeu no que o Hibernate espera do banco. Classe e tabela precisam concordar.</div>
+
+<h2 id="c6">6. API REST (FilmeController)</h2>
+<p>[API REST] é um programa que responde a pedidos [HTTP] (o protocolo da web) com dados, normalmente em [JSON] (texto no formato <code>{"nome": "Matrix"}</code>). O Spring converte objeto Java em JSON e JSON em objeto sozinho.</p>
+<div class="wrap"><table>
+<tr><th>Pedido</th><th>Ação</th><th>Método no código</th><th>Resposta</th></tr>
+<tr><td><code>GET /filmes</code></td><td>listar todos</td><td><code>listar()</code></td><td>200 + lista</td></tr>
+<tr><td><code>GET /filmes/2</code></td><td>buscar um</td><td><code>buscarPorId()</code></td><td>200 ou 404</td></tr>
+<tr><td><code>POST /filmes</code></td><td>cadastrar</td><td><code>cadastrar()</code></td><td>201 Created</td></tr>
+<tr><td><code>PUT /filmes/2</code></td><td>atualizar</td><td><code>atualizar()</code></td><td>200 ou 404</td></tr>
+<tr><td><code>DELETE /filmes/2</code></td><td>apagar</td><td><code>deletar()</code></td><td>200 ou 404</td></tr>
+</table></div>
+<p>Códigos de status: 200 = deu certo; 201 = criado; 404 = não encontrado.</p>
+<pre class="jv"><code>@RestController            // classe que responde pedidos web e devolve JSON
+@RequestMapping("/filmes") // prefixo de todos os endereços: /filmes
+public class FilmeController {
+
+    @GetMapping            // GET /filmes
+    public List&lt;Filme&gt; listar() {
+        Filme filme1 = Filme.builder().id(1L).nome("Matrix")
+                .classificacao(ClassificacaoIndicativaEnum.A16)
+                .emCartaz(SimNaoEnum.S).build();
+        // filme2 igual, com "Homem aranha"
+        return List.of(filme1, filme2);   // lista fixa (imutável): dados de mentira
+    }
+
+    List&lt;Long&gt; idsExistentes = List.of(1L, 2L, 3L);   // "banco" de mentira: só guarda ids
+
+    @GetMapping("/{id}")   // GET /filmes/2  -> {id} vira 2
+    public ResponseEntity&lt;Filme&gt; buscarPorId(@PathVariable Long id) {  // @PathVariable: pega o {id} da URL
+        if (idsExistentes.contains(id)) {
+            Filme filme1 = Filme.builder().id(id).nome("Matrix").build(); // (resumido)
+            return ResponseEntity.ok(filme1);          // status 200 + o filme
+        }
+        return ResponseEntity.notFound().build();      // status 404 sem corpo
+    }
+
+    @PostMapping           // POST /filmes
+    public ResponseEntity&lt;Filme&gt; cadastrar(@RequestBody Filme filme) { // @RequestBody: JSON do pedido vira Filme
+        filme.setId(100L);                             // finge que o banco gerou o id
+        return ResponseEntity.status(HttpStatus.CREATED).body(filme);  // 201 + filme
+    }
+
+    @PutMapping("/{id}")   // PUT /filmes/2
+    public ResponseEntity&lt;Filme&gt; atualizar(@RequestBody Filme filme, @PathVariable Long id) {
+        if (idsExistentes.contains(id)) { return ResponseEntity.ok(filme); }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}") // DELETE /filmes/2
+    public ResponseEntity&lt;Void&gt; deletar(@PathVariable Long id) {  // Void = resposta sem corpo
+        if (idsExistentes.contains(id)) { return ResponseEntity.ok().build(); }
+        return ResponseEntity.notFound().build();
+    }
+}</code></pre>
+<p>[ResponseEntity] é um "envelope" que carrega o status HTTP junto com o conteúdo. Repare que nada aqui fala com o banco ainda: o controller usa dados de mentira. O próximo passo natural (que você vai ver na aula) é trocar isso por um [repository] do Spring Data JPA.</p>
+<div class="box"><b>Ideia-chave:</b> cada anotação (<code>@GetMapping</code>, <code>@PostMapping</code>...) liga um endereço + verbo HTTP a um método. O método devolve o resultado e o Spring transforma em resposta.</div>
+
+<h2 id="c7">7. SalaController: seu ponto de partida</h2>
+<pre class="jv"><code>public class SalaController {
+
+    private List&lt;Long&gt; idsExistentes = new ArrayList&lt;&gt;(List.of(1L, 2L, 3L, 4L, 5L));
+    // List.of(...) é imutável; embrulhar em new ArrayList&lt;&gt;(...) cria uma cópia
+    // que aceita add/remove. 'private' = só esta classe usa.
+
+    private Long gerarIdAleatorio() {
+        return new Random().nextLong(5) + 1;   // nextLong(5) sorteia 0..4; +1 => 1..5
+    }
+
+    // Implementação do seu código
+}</code></pre>
+<p>Diferente do <code>FilmeController</code>, esta classe ainda <b>não tem anotações</b>, então o Spring a ignora. Ela é o esqueleto: falta o <code>@RestController</code>, o <code>@RequestMapping("/salas")</code>, a entidade <code>Sala</code> (o diagrama do PDF define <code>id</code>, <code>nome</code>, <code>preco</code>) e os métodos. Use o <code>FilmeController</code> como modelo.</p>
+
+<h2 id="c8">8. Pegadinhas do projeto</h2>
+<div class="box warn"><b>emCartaz sem @Enumerated.</b> Sem a anotação, o padrão do JPA é gravar a posição do enum (0, 1), mas a coluna guarda 'S'/'N'. Quando o banco entrar em uso, isso costuma dar erro. O conserto é acrescentar <code>@Enumerated(EnumType.STRING)</code>, como nos outros enums.</div>
+<div class="box warn"><b>Falta construtor vazio.</b> Com <code>@Builder</code> + <code>@AllArgsConstructor</code>, o construtor sem argumentos deixa de existir, e o JPA normalmente exige um. O jeito comum é somar <code>@NoArgsConstructor</code>.</div>
+<div class="box warn"><b>Senha no código.</b> O <code>application.properties</code> tem usuário e senha do banco escritos, e o projeto vai para o GitHub. Em projeto real, credenciais ficam em variáveis de ambiente ou em arquivo fora do repositório.</div>
+
+<h2 id="c9">9. Exercícios</h2>
+<ol>
+<li>Reescreva em Python (com <code>class</code>) a classe <code>Filme</code> do capítulo 2 e acrescente um atributo <code>ano</code>. Depois faça o mesmo em Java, à mão, com getter e setter.</li>
+<li>Na tabela do capítulo 6, descreva com suas palavras o que acontece quando alguém faz <code>DELETE /filmes/9</code>. Qual status volta, e por quê?</li>
+<li>Escreva a entidade <code>Sala</code> (<code>id</code>, <code>nome</code>, <code>preco</code>) usando as anotações do capítulo 5. Invente os nomes das colunas seguindo os prefixos (<code>ID_</code>, <code>TX_</code>, <code>NR_</code>).</li>
+<li>Escolha uma entidade e um enum do diagrama do PDF (por exemplo <code>Ingresso</code> e <code>TipoIngressoEnum</code>) e monte os dois, usando <code>Filme</code> e <code>SimNaoEnum</code> como modelo.</li>
+</ol>
+</main>
+</body>
+</html>

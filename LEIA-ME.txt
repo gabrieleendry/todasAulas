@@ -1,0 +1,23 @@
+MATERIAIS ORGANIZADOS POR MATERIA E CONTEUDO
+
+Todos os 184 arquivos originais foram preservados, sem alterar seus conteudos.
+Pastas numeradas apresentam os assuntos em sequencia de estudo.
+Codigos, modulos importados e dados de cada atividade foram mantidos juntos; execute os programas a partir da respectiva pasta.
+Versoes distintas foram mantidas. Copias identicas de documentos e SQL estao em 91_Copias_identicas_preservadas; scripts e dados repetidos foram mantidos junto aos exercicios.
+Arquivos tecnicos estao separados em 90_Arquivos_tecnicos_preservados. O projeto Calculadora extraido tambem conserva sua estrutura interna original.
+Os RAR originais foram preservados. Calculadora e atividade de dicionarios tambem estao extraidos. O RAR aula 08-05 contem os mesmos tres materiais ja presentes na pasta original.
+O site Java tambem foi extraido: abra index.html.
+Alguns PDFs sao digitalizacoes; os titulos foram identificados por leitura OCR da capa.
+Organizacao de arquivos, sem correcao ou teste de funcionamento dos codigos.
+
+INDICE.html: indice clicavel.
+MAPA_DOS_ARQUIVOS.csv: correspondencia completa entre caminhos antigos e novos, tamanhos e hashes de verificacao.
+
+ARQUIVOS COM CONTEUDO BINARIO/ILEGIVEL SOB EXTENSAO DE TEXTO (preservados):
+01_Banco_de_Dados_II/09_Arquivos_com_conteudo_ilegivel/Atividade complementar.sql
+02_Desenvolvimento_de_Sistemas_Python/10_Arquivos_com_conteudo_ilegivel/Material_complementar/Exercicios.txt
+02_Desenvolvimento_de_Sistemas_Python/03_Condicionais_IF_ELSE_MATCH/Decisoes_e_calculo_salarial/exercicios_decisao.py
+02_Desenvolvimento_de_Sistemas_Python/05_Vetores_e_listas/Exercicios_de_listas/Exercicios listas.txt
+02_Desenvolvimento_de_Sistemas_Python/07_Funcoes_procedimentos_e_modulos/Funcoes_com_frases/Exer-29-04/exer.py
+02_Desenvolvimento_de_Sistemas_Python/07_Funcoes_procedimentos_e_modulos/Bhaskara_media_e_importacao/Aula29072026-import/revisao/exercicio_v7.py
+02_Desenvolvimento_de_Sistemas_Python/07_Funcoes_procedimentos_e_modulos/Bhaskara_media_e_importacao/Aula29072026-import/revisao/exercicio_v8.py

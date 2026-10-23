@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Calculadora.ViewModel"
+             x:Class="Calculadora.View.SalarioView"
+             Title="Calculadora"
+             BackgroundColor="{AppThemeBinding Light=#F4F6F9, Dark=#1E1E2C}">
+
+    <ContentPage.BindingContext>
+        <viewmodel:SalarioViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView VerticalOptions="Center">
+        <VerticalStackLayout Padding="20" Spacing="20" MaximumWidthRequest="450">
+
+            
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                <Label Text="Calculadora de Salário"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=#2B2D42, Dark=#FFFFFF}"
+                       HorizontalOptions="Center" />
+                <Label Text="Calcule o valor líquido com descontos de INSS e IRRF"
+                       FontSize="13"
+                       TextColor="{AppThemeBinding Light=#8D99AE, Dark=#A0AAB8}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            
+            <Border StrokeShape="RoundRectangle 16"
+                    StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light=#E2E8F0, Dark=#2D3250}"
+                    BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#2A2D3E}"
+                    Padding="24">
+                <Border.Shadow>
+                    <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.08" />
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="18">
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Valor por Hora (R$)"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#4A5568, Dark=#CBD5E1}" />
+                        <Border StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#4A5568}"
+                                BackgroundColor="Transparent"
+                                Padding="10,2">
+                            <Entry Placeholder="Ex: 25,00"
+                                   Keyboard="Numeric"
+                                   Text="{Binding ValorHoraString, Mode=TwoWay}"
+                                   TextColor="{AppThemeBinding Light=#1A202C, Dark=#F7FAFC}"
+                                   PlaceholderColor="#A0AEC0" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                  
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Horas Trabalhadas no Mês"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#4A5568, Dark=#CBD5E1}" />
+                        <Border StrokeShape="RoundRectangle 8"
+                                StrokeThickness="1"
+                                Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#4A5568}"
+                                BackgroundColor="Transparent"
+                                Padding="10,2">
+                            <Entry Placeholder="Ex: 160"
+                                   Keyboard="Numeric"
+                                   Text="{Binding HorasTrabalhadasString, Mode=TwoWay}"
+                                   TextColor="{AppThemeBinding Light=#1A202C, Dark=#F7FAFC}"
+                                   PlaceholderColor="#A0AEC0" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                  
+                    <Button Text="Calcular Salário"
+                            Command="{Binding CalcularSalarioCommand}"
+                            BackgroundColor="#512BD4"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            CornerRadius="8"
+                            HeightRequest="48"
+                            Margin="0,10,0,0" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            
+            <Border StrokeShape="RoundRectangle 16"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light=#E6F4EA, Dark=#1B3A2B}"
+                    Padding="20"
+                    HorizontalOptions="Fill">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <Label Text="SALÁRIO LÍQUIDO ESTIMADO"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#137333, Dark=#A8FAB5}"
+                           HorizontalOptions="Center" />
+                    <Label Text="{Binding SalarioCalculado, StringFormat='{0:C}'}"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#137333, Dark=#A8FAB5}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
