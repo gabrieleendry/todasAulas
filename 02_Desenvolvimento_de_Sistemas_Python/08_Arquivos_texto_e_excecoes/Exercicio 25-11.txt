@@ -1,0 +1,15 @@
+MENU
+0 - SAIR
+1 - CADASTRAR PETS
+2 - LISTAR PETS
+3 - EDITAR PET
+4 - EXCLUIR PET
+5 - EXCLUIR TODOS OS PETS
+6 - FILTRAR
+    1 - Nome completo
+    2 - Começa com
+    3 - Termina com
+    4 - Contém
+
+Fazer o item 6 considerando o campo ´nome´.
+Utilize o operador like do SQL para implementar estas rotinas.
